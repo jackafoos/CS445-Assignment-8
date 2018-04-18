@@ -110,9 +110,6 @@ public class Graph {
 			for (Edge edge : graphData.get(top)){
 				if(!visited.containsKey(edge.adjacentNode)){
 					visited.put(edge.adjacentNode, top);
-					//to make sure it is adding...
-					System.out.println("" + edge.adjacentNode + " => " + visited.get(edge.adjacentNode));
-					//...**
 					q.add(edge.adjacentNode);
 				}
 			}
