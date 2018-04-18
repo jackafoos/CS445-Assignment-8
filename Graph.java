@@ -98,28 +98,37 @@ public class Graph {
 	}
 
 	public List<String> getShortestPath(String from, String to) {
-		List<String> shortPath = new List<String>();
-		Queue<String> q = new Queue<String>();
-		Map<String,String> visited = new Map<String>();
-
-		q.add(from)
+		List<String> shortPath = new LinkedList<String>();
+		Queue<String> q = new LinkedList<String>();
+		Map<String,String> visited = new HashMap<String,String>();
+		//Build path of visited nodes using a Queue to keep track of work done
+		q.add(from);
 		visited.put(from, null);
-		while(true){
+
+		while(!(q.peek() == null)){
 			String top = q.remove();
 			for (Edge edge : graphData.get(top)){
 				if(!visited.containsKey(edge.adjacentNode)){
 					visited.put(edge.adjacentNode, top);
-					System.out.println("" + edge.adjacentNode + " => " + visited.get(adjacentNode));
+					//to make sure it is adding...
+					System.out.println("" + edge.adjacentNode + " => " + visited.get(edge.adjacentNode));
+					//...**
 					q.add(edge.adjacentNode);
 				}
 			}
 			if(top.equals(to))
 				break;
 		}
+		//reconstruct the shortest path in order and return
+		String nextInPath;
+		if (visited.containsKey(to))
+			nextInPath = to;
+		else
+			nextInPath = null;
 
-		while (top != null){
-			shortPath.add(0, top);
-			top = visited.get(top);
+		while (nextInPath != null){
+			shortPath.add(0, nextInPath);
+			nextInPath = visited.get(nextInPath);
 		}
 		return shortPath;
 	}
